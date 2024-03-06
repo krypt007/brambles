@@ -104,7 +104,7 @@ export default function DepositForm() {
                 )}
                 </div>
                 <Typography variant="h3" color="blue">
-                  Cybersource Make Payment
+                 <div className="flex bg-blue-500/50 p-2 rounded-md w-full justify-between font-bold">Make Payment</div>
                 </Typography>
             </CardHeader>
             <CardBody>
@@ -235,6 +235,25 @@ export default function DepositForm() {
                             })}
                         />
                         <p className="block col-span-4 text-xs text-violet-800">{errors.cardHolderName && errors.cardHolderName.message}</p>
+                        </div>
+                        
+                        <div>
+                            <Typography variant="small" color="blue-gray" className="mb-2 font-medium ">
+                            <label className="block mb-1 text-sm text-left font-medium text-white" htmlFor="orderAmount">Amount in USD:</label>
+                            </Typography>
+
+                            <input className="col-span-3 bg-blue-200 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="0.00"
+                                {...register('orderAmount', {
+                                    required: 'Amount is required',
+                                    minLength: {
+                                        value: 2,
+                                        message: 'Min amount is 10',
+                                    },
+                                    valueAsNumber: true,
+                                })}
+                            />
+                            <p className="block col-span-4 text-xs text-violet-800">{errors.orderAmount && errors.orderAmount.message}</p>
                         </div>
                         
                             {/* { (payStatus == 1) ? (<Button size="lg" type="submit" className="bg-blue-300" onClick={handleSubmit}>Pay Now</Button>): (payStatus == 2) ? (<Button size="lg">Processing</Button>): (payStatus == 3) ? (<Button size="lg">Payment Successful</Button>): (<Button size="lg">Error</Button>)} */}

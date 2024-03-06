@@ -16,23 +16,23 @@ const Transactions = () => {
         </table>
         <div className='h-[60vh] overflow-scroll'>
             <tr className='flex justify-between p-2 bg-gray-600 rounded-sm'>
-                <td>John Smith</td><td>john@gmail.com</td><td>15minutes ago</td><td>Paypal</td>
+                <td>John Smith</td><td>john@gmail.com</td><td>15minutes ago</td><td>Visa</td>
             </tr>
             <tr className='flex justify-between p-2 bg-gray-500 rounded-sm'>
                 <td>John Smith</td><td>john@gmail.com</td><td>15minutes ago</td><td>Paypal</td>
             </tr>
             <tr className='flex justify-between p-2 bg-gray-600 rounded-sm'>
-                <td>John Smith</td><td>john@gmail.com</td><td>15minutes ago</td><td>Paypal</td>
+                <td>John Smith</td><td>john@gmail.com</td><td>15minutes ago</td><td>Visa</td>
             </tr>
             <tr className='flex justify-between p-2 bg-gray-500 rounded-sm'>
-                <td>John Smith</td><td>john@gmail.com</td><td>15minutes ago</td><td>Paypal</td>
+                <td>John Smith</td><td>john@gmail.com</td><td>15minutes ago</td><td>Visa</td>
             </tr>
 
             <tr className='flex justify-between p-2 bg-gray-600 rounded-sm'>
                 <td>John Smith</td><td>john@gmail.com</td><td>15minutes ago</td><td>Paypal</td>
             </tr>
             <tr className='flex justify-between p-2 bg-gray-500 rounded-sm'>
-                <td>John Smith</td><td>john@gmail.com</td><td>15minutes ago</td><td>Paypal</td>
+                <td>John Smith</td><td>john@gmail.com</td><td>15minutes ago</td><td>Mastercard</td>
             </tr>
             <tr className='flex justify-between p-2 bg-gray-600 rounded-sm'>
                 <td>John Smith</td><td>john@gmail.com</td><td>15minutes ago</td><td>Paypal</td>
