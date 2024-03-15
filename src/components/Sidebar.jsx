@@ -28,7 +28,7 @@ const Sidebar = () => {
     }
   }
   return (
-    <div className='text-bold w-[20%] align-top bg-gray-500 p-4'>
+    <div className='text-bold w-[20%] align-top bg-[#242424] p-4'>
         <div className='flex flex-col justify-between align-center h-[10%] bg-gray-600  hover:bg-gray-400 rounded-md py-3'>
           <div className='flex justify-start gap-3 p-2 rounded-md'>
               <div className='p-2 justify-center align-center text-purple-300 text-bold object-inline'><RxDashboard /></div>
