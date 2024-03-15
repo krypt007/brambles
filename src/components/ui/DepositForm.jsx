@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import { Buffer } from 'buffer'; if (!window.Buffer) {   window.Buffer = Buffer; };
 import { useCountries } from "use-react-countries";
 import {
   Card,
@@ -22,7 +23,8 @@ import {
 } from "@heroicons/react/24/solid";
 
 import { useForm } from 'react-hook-form';
- 
+import axios from "axios";
+
 function formatCardNumber(value) {
   const val = value.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
   const matches = val.match(/\d{4,16}/g);
@@ -58,6 +60,64 @@ export default function DepositForm() {
   const [cardExpires, setCardExpires] = useState("");
   const [payStatus, setPayStatus] = useState(1);
 
+  const [apiResponse, setApiResponse] = useState('');
+
+  const processPayment = async (requestData) => {
+    console.log(JSON.stringify(requestData));
+    let data = JSON.stringify({
+        "clientReferenceInformation": {
+          "code": "TC50171_7"
+        },
+        "pointOfSaleInformation": {
+          "cardPresent": "false",
+          "catLevel": "6",
+          "terminalCapability": "4"
+        },
+        "orderInformation": {
+          "billTo": {
+            "country": "US",
+            "firstName": "John",
+            "lastName": "Deo",
+            "address1": "901 Metro Center Blvd",
+            "postalCode": "40500",
+            "locality": "Foster City",
+            "administrativeArea": "CA",
+            "email": "test@cybs.com"
+          },
+          "amountDetails": {
+            "totalAmount": "73.00",
+            "currency": "USD"
+          }
+        },
+        "paymentInformation": {
+          "card": {
+            "expirationYear": "2031",
+            "number": "4111111111111111",
+            "securityCode": "123",
+            "expirationMonth": "12"
+          }
+        }
+    });
+
+    const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: data
+    };    
+
+    await fetch('https://brambles-express-gzwsdj55u-marastreams.vercel.app/api/cybersource', options)
+    .then(response => response.json())
+    .then(data => {
+        console.log(JSON.stringify(data));
+        setApiResponse('successful fetch API Call');
+        alert(JSON.stringify(data));
+    })
+    .catch(error => console.error(error));
+  };
+
+
   function _handleSubmit (e) {
     setPayStatus(2); // Set the payment status to processing
 
@@ -69,22 +129,14 @@ export default function DepositForm() {
 
   }
 
-  const onSubmit = (data) => {
+  const onSubmit = async (formData) => {
     setValue("cardNumber", cardNumber)
-    alert(JSON.stringify(data));
-    fetch('/api/registerNewOffender',{
-       method: 'POST',
-       body: JSON.stringify(data),
-    }).then(()=>{
-       console.log('data')
-      //  refreshOffendersList()
-    }).catch(error => {
-      console.log('error', error);
-    });
-    // setOffenders((offenders) => [...offenders, ...data]);
-  
+    alert(JSON.stringify(formData));
+    await processPayment(formData);
+    alert('Payment successful: '+ payStatus);
+    alert('Payment info: '+ apiResponse);  
     reset();
-    setModal(!modal);
+    // setModal(!modal);
   };
  
   return (
