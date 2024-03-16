@@ -7,6 +7,7 @@ import { RxPerson } from 'react-icons/rx';
 
 const TopCards = () => {
   const {showTransactionsModal, setShowTransactionsModal} = useContext(MyContext);
+  const {showTopCards, setShowTopCards} = useContext(MyContext);
   return (
     <div className='flex w-full h-[20vh] bg-[#242424] justify-between rounded-md p-2 items-center hover:text-color-1 gap-1'>
         <div className='flex w-[100%] h-[100%] gap-3 pr-2'>

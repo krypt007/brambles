@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { RxSketchLogo, RxDashboard, RxPerson } from 'react-icons/rx';
 import { HiOutlineShoppingBag } from 'react-icons/hi';
 import { FiSettings } from 'react-icons/fi';
@@ -32,7 +33,9 @@ const Sidebar = () => {
         <div className='flex flex-col justify-between align-center h-[10%] bg-gray-600  hover:bg-gray-400 rounded-md py-3'>
           <div className='flex justify-start gap-3 p-2 rounded-md'>
               <div className='p-2 justify-center align-center text-purple-300 text-bold object-inline'><RxDashboard /></div>
-              <div className='p-2 justify-start align-center text-purple-300 text-bold object-inline'>Dashboard</div>
+              <div className='p-2 justify-start align-center text-purple-300 text-bold object-inline'>
+                <Link to="/Dashboard" className=' text-purple-300 text-bold'> Dashboard </Link>
+              </div>
             </div>
         </div>
         <div className='p-2' />
@@ -46,12 +49,14 @@ const Sidebar = () => {
 
           <div className='flex justify-start gap-3 p-2 rounded-md hover:bg-gray-400'>
             <div className='p-2 justify-center align-center text-purple-700 text-bold object-inline'><RxSketchLogo /></div>
-            <div>Deposit</div>
+            <div><Link to="/Deposit"> Deposit </Link></div>
           </div>
 
           <div className='flex justify-start gap-3 p-2 rounded-md hover:bg-gray-400'>
             <div className='p-2 justify-center align-center text-purple-700 text-bold object-inline'><RxSketchLogo /></div>
-            <div>Transfer</div>
+            <div>
+              <Link to="/Transfer" className=' text-white text-bold'> Transfer </Link>
+            </div>
           </div>
 
           <div className='flex justify-start gap-3 p-2 rounded-md hover:bg-gray-400'>
@@ -61,7 +66,9 @@ const Sidebar = () => {
 
           <div className='flex justify-start gap-3 p-2 rounded-md hover:bg-gray-400'>
             <div className='p-2 justify-center align-center text-purple-700 text-bold object-inline'><RxSketchLogo /></div>
-            <div>Withdraw</div>
+            <div>
+              <Link to="/Withdraw" className=' text-white text-bold'> Withdraw </Link>
+            </div>
           </div>
 
           <div className='flex justify-start gap-3 p-2 rounded-md hover:bg-gray-400'>
@@ -74,7 +81,7 @@ const Sidebar = () => {
         <div className='flex flex-col justify-end h-[30%]'>
           <div className='flex justify-start gap-3 p-2 rounded-md hover:bg-gray-400'>
             <div className='p-2 justify-center align-center text-purple-700 text-bold object-inline'><RxSketchLogo /></div>
-            <div>Logout</div>
+            <div><Link to="/"> Logout </Link></div>
           </div>
         </div>
     </div>

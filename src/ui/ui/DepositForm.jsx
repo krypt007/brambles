@@ -140,7 +140,7 @@ export default function DepositForm() {
   };
  
   return (
-    <div className="flex justify-center w-full align-center h-[90%] border-black p-0">
+    <div className="flex justify-center w-full align-center h-[70vh] border-black p-0 overflow-scroll">
         <Card className="w-full max-w-[24rem] bg-blue-400 rounded-sm">
             <CardHeader
                 color="white"
@@ -155,8 +155,8 @@ export default function DepositForm() {
                     <img alt="paypal " className="w-14 " src="https://docs.material-tailwind.com/icons/paypall.png" />
                 )}
                 </div>
-                <Typography variant="h3" color="blue">
-                 <div className="flex bg-blue-500/50 p-2 rounded-md w-full justify-between font-bold">Make Payment</div>
+                <Typography variant="h5" color="blue" className="">
+                 <div className="flex bg-blue-500/50 p-1 rounded-md w-full justify-between font-bold">Make Payment</div>
                 </Typography>
             </CardHeader>
             <CardBody>

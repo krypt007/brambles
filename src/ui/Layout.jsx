@@ -5,7 +5,7 @@ import { useContext } from 'react';
 import DepositForm from './ui/DepositForm';
 
 
-const Dashboard = () => {
+const Layout = () => {
     // const level = useContext(MyContext);
   const {showTransactionsModal} = useContext(MyContext)
   return (
@@ -18,4 +18,4 @@ const Dashboard = () => {
   )
 }
 
-export default Dashboard
+export default Layout
