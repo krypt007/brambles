@@ -1,3 +1,4 @@
+import { Toaster, toast } from 'sonner'
 import Sidebar from "../../ui/Sidebar"
 const Withdraw = () => {
   return (
@@ -8,7 +9,10 @@ const Withdraw = () => {
           <div>Withdraw Funds</div>
         </div>
         <div className="flex w-full h-full"> 
-                
+        
+        <button onClick={() => toast.success('Event has been created')}>
+          Give me a toast
+        </button>
         
         </div>
       </div>

@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
+import { Toaster, toast } from 'sonner'
 import Home from './Pages/Home';
 import Dashboard from './Pages/Dashboard';
 import Deposit from './Pages/Deposit';
@@ -7,13 +8,14 @@ import Withdraw from './Pages/Withdraw';
 export default function App() {
   return (
     <>
-       <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/Dashboard" element={<Dashboard />} />
-          <Route path="/Deposit" element={<Deposit />} />
-          <Route path="/Transfer" element={<Transfer />} />
-          <Route path="/Withdraw" element={<Withdraw />} />
-       </Routes>
+      <Toaster richColors  />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/Dashboard" element={<Dashboard />} />
+        <Route path="/Deposit" element={<Deposit />} />
+        <Route path="/Transfer" element={<Transfer />} />
+        <Route path="/Withdraw" element={<Withdraw />} />
+      </Routes>
     </>
   )
 }

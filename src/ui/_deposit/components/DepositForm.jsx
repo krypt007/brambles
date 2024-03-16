@@ -22,7 +22,8 @@ import {
   LockClosedIcon,
 } from "@heroicons/react/24/solid";
 
-import { useForm } from 'react-hook-form';
+import { toast } from 'sonner'
+import { useForm, useController } from 'react-hook-form';
 import axios from "axios";
 
 function formatCardNumber(value) {
@@ -41,6 +42,13 @@ function formatCardNumber(value) {
     return value;
   }
 }
+
+function formatCardNumber2(numberStr) {
+    return numberStr
+      .replace(/\W/gi, "")
+      .replace(/(.{4})/g, "$1 ")
+      .substring(0, 19);
+  }
  
 function formatExpires(value) {
   return value
@@ -82,10 +90,10 @@ export default function DepositForm() {
             "postalCode": "40500",
             "locality": "Foster City",
             "administrativeArea": "CA",
-            "email": "test@cybs.com"
+            "email": requestData.email
           },
           "amountDetails": {
-            "totalAmount": "73.00",
+            "totalAmount": requestData.orderAmount,
             "currency": "USD"
           }
         },
@@ -112,7 +120,7 @@ export default function DepositForm() {
     .then(data => {
         console.log(JSON.stringify(data));
         setApiResponse('successful fetch API Call');
-        alert(JSON.stringify(data));
+        toast.success(JSON.stringify(data));
     })
     .catch(error => console.error(error));
   };
@@ -131,19 +139,19 @@ export default function DepositForm() {
 
   const onSubmit = async (formData) => {
     setValue("cardNumber", cardNumber)
-    alert(JSON.stringify(formData));
+    toast.info(JSON.stringify(formData)); 
     await processPayment(formData);
-    alert('Payment successful: '+ payStatus);
-    alert('Payment info: '+ apiResponse);  
+    toast.success('Payment successful: '+ payStatus);
+    toast.info('Payment info: '+ apiResponse);  
     reset();
     // setModal(!modal);
   };
  
   return (
-    <div className="flex justify-center w-full align-center h-[70vh] border-black p-0 overflow-scroll">
-        <Card className="w-full max-w-[24rem] bg-blue-400 rounded-sm">
+    <div className="flex justify-center w-full align-center h-[90vh] border-black p-0 overflow-scroll">
+        <Card className="w-full max-w-[24rem] bg-blue-200 rounded-sm">
             <CardHeader
-                color="white"
+                color="brown"
                 floated={false}
                 shadow={false}
                 className="m-0 grid place-items-center px-4 py-2 text-center"
@@ -155,7 +163,7 @@ export default function DepositForm() {
                     <img alt="paypal " className="w-14 " src="https://docs.material-tailwind.com/icons/paypall.png" />
                 )}
                 </div>
-                <Typography variant="h5" color="blue" className="">
+                <Typography variant="h2" color="blue" className="">
                  <div className="flex bg-blue-500/50 p-1 rounded-md w-full justify-between font-bold">Make Payment</div>
                 </Typography>
             </CardHeader>
@@ -187,7 +195,7 @@ export default function DepositForm() {
                     <form className="mt-6 flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
                         <div>
                             <Typography variant="small" color="blue-gray" className="mb-2 font-medium">
-                                <label className="block mb-1 text-sm text-left font-medium text-white" htmlFor="email">Your Email:</label>
+                                <label className="block mb-1 text-sm text-left font-medium text-[#404040]" htmlFor="email">Your Email:</label>
                             </Typography>
                             <input className="col-span-3 bg-blue-200 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="name@mail.com"
@@ -205,13 +213,20 @@ export default function DepositForm() {
                         <div className="my-1">
                         <div>
                             <Typography variant="small" color="blue-gray" className="mb-2 font-medium ">
-                            <label className="block mb-1 text-sm text-left font-medium text-white" htmlFor="cardNumber">Card Details:</label>
+                            <label className="block mb-1 text-sm text-left font-medium text-[#303030]" htmlFor="cardNumber">Card Details:</label>
                             </Typography>
 
                             <input className="col-span-3 bg-blue-200 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="0000 0000 0000 0000"
                                 // value={formatCardNumber(cardNumber)}
                                 // onChange={(event) => setCardNumber(event.target.value)}
+                                onChange={(e) => {
+                                    cardNumber.onChange(formatCardNumber2(e.target.value));
+                                }}
+                                onBlur={cardNumber.onBlur}
+                                value={cardNumber.value}
+                                ref={cardNumber.ref}
+                                inputMode="numeric"
                                 {...register('cardNumber', {
                                     required: 'Card No is required',
                                     minLength: {
@@ -223,7 +238,7 @@ export default function DepositForm() {
                                         message: 'Max length is 19',
                                     },
                                     pattern: {
-                                        value: /^\d{4}(?:\s\d{4}){3}$/,
+                                        value: /^\d{4}(?:\s\d{4}){3}$/, 
                                         message: 'Please enter a valid card number',
                                     },
                                 })}
@@ -234,7 +249,7 @@ export default function DepositForm() {
                         <div className="my-4 flex items-center gap-4">                        
                         <div>
                             <Typography variant="small" color="blue-gray" className="mb-2 font-medium">
-                                <label className="block mb-1 text-sm text-left font-medium text-white" htmlFor="cardExpires">Expires:</label>
+                                <label className="block mb-1 text-sm text-left font-medium text-[#303030]" htmlFor="cardExpires">Expires:</label>
                             </Typography>
                             <input className="col-span-3 bg-blue-200 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 focus:!border-t-gray-900 block min-w-[72px] p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="00/00"
@@ -254,7 +269,7 @@ export default function DepositForm() {
                         </div>
                         <div>
                         <Typography variant="small" color="blue-gray" className="mb-2 font-medium">
-                            <label className="block mb-1 text-sm text-left font-medium text-white" htmlFor="cardCvc">CVC:</label>
+                            <label className="block mb-1 text-sm text-left font-medium text-[#303030]" htmlFor="cardCvc">CVC:</label>
                         </Typography>
                         <input className="col-span-3 bg-blue-200 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 focus:!border-t-gray-900 block min-w-[72px] p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="000"
@@ -268,13 +283,17 @@ export default function DepositForm() {
                                         value: 4,
                                         message: 'Max length is 4',
                                     },
+                                    pattern: {
+                                        value: /[0-9]{3}/,
+                                        message: "Must be 3 digits",
+                                    },
                                 })}
                             />
                             <p className="block col-span-4 text-xs text-violet-800">{errors.cardCvc && errors.cardCvc.message}</p>
                         </div>
                         </div>
                         <Typography variant="small" color="blue-gray" className="mb-2 font-medium">
-                            <label className="block mb-1 text-sm text-left font-medium text-white" htmlFor="cardHolderName">Holder Name:</label>
+                            <label className="block mb-1 text-sm text-left font-medium text-[#303030]" htmlFor="cardHolderName">Holder Name:</label>
                         </Typography>
                         <input className="col-span-3 bg-blue-200 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="John Smith"
@@ -291,7 +310,7 @@ export default function DepositForm() {
                         
                         <div>
                             <Typography variant="small" color="blue-gray" className="mb-2 font-medium ">
-                            <label className="block mb-1 text-sm text-left font-medium text-white" htmlFor="orderAmount">Amount in USD:</label>
+                            <label className="block mb-1 text-sm text-left font-medium text-[#303030]" htmlFor="orderAmount">Amount in USD:</label>
                             </Typography>
 
                             <input className="col-span-3 bg-blue-200 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
