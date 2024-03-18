@@ -151,10 +151,10 @@ export default function DepositForm() {
     <div className="flex justify-center w-full align-center h-[90vh] border-black p-0 overflow-scroll">
         <Card className="w-full max-w-[24rem] bg-blue-200 rounded-sm">
             <CardHeader
-                color="brown"
+                color="blue"
                 floated={false}
                 shadow={false}
-                className="m-0 grid place-items-center px-4 py-2 text-center"
+                className="m-0 grid place-items-center px-4 py-1 text-center"
             >
                 <div className="mb-4 h-10 p-2 text-white">
                 {type === "card" ? (

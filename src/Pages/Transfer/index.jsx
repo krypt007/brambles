@@ -1,17 +1,25 @@
 import { useController } from "react-hook-form";
 import { useState } from "react";
+import { toast } from 'sonner'
+import {TransferForm} from "../../ui/_transfer"
 
 import Sidebar from "../../ui/Sidebar"
 const Transfer = () => {
   return (
     <div className="flex h-screen w-screen justify-between">
-      <Sidebar />
+      <div className="hidden md:block"><Sidebar /></div>
       <div className="flex flex-col w-full">        
         <div className="flex flex-col w-full p-2">
-          <div>Transfer Funds</div>
+          <div className='flex w-full h-[5vh] p-2 text-red-100 text-md font-bold  bg-gradient-to-br from-[#242424] to bg-[#404040] rounded-md justify-center '>
+            Transfer Funds
+          </div>
         </div>
-        <div className="flex w-full h-full"> 
-                
+        <div className="flex flex-col p-2 justify-between w-full h-full"> 
+          <TransferForm />
+        
+          <button onClick={() => toast.success('Event has been created')}>
+            Processing Transfer
+          </button>
         
         </div>
       </div>

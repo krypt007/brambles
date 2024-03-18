@@ -1,13 +1,15 @@
-import React from 'react'
+import React, {useContext, useState} from 'react'
 import { Link } from 'react-router-dom'
+import MyContext from "../../context/MyContext";
 
 
 import { Footer, Stats, Hero } from "../../ui/_home/components";
 
 const Home = () => {
+
   return (
     <div className="bg-primary w-screen overflow-hidden">
-        <div className={`flex flex-col bg-black flex justify-center items-center`}>
+        <div className={`flex flex-col bg-black justify-center items-center`}>
           <div className='flex h-[5%] p-2 bg-gray-800 w-full justify-between '>
             <div className='p-2'><div className='p-2 rounded-full w-[24px] h-[24px] bg-gradient-to-br from-red-500 to-pink-200 animate-pulse' /></div>
             <div className='flex gap-2 text-sm font-bold'>
