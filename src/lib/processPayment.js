@@ -262,7 +262,7 @@ async function processPost() {
 
         return { data, response, _status };
     } catch (error) {
-        console.error(error);
+        console.log(error);
         return { error };
     }
 }

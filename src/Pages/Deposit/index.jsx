@@ -1,4 +1,3 @@
-import Navbar from "../../ui/Navbar"
 import Sidebar from "../../ui/Sidebar"
 import DepositForm from "../../ui/_deposit/components/DepositForm"
 const Deposit = () => {

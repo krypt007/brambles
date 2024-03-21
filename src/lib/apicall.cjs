@@ -45,7 +45,7 @@ const processPayment = async (requestData) => {
     //   // const responseData = await response.json();
     //   // setApiResponse(JSON.stringify(responseData.data));
     // } catch (error) {
-    //   console.error('Error:', error);
+    //  ('Error:', error);
     //   // setApiResponse('Error occurred. Please try again later.');
     // }
     let data = JSON.stringify({

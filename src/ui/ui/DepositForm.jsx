@@ -114,7 +114,7 @@ export default function DepositForm() {
         setApiResponse('successful fetch API Call');
         alert(JSON.stringify(data));
     })
-    .catch(error => console.error(error));
+    .catch(error => console.log(error));
   };
 
 
