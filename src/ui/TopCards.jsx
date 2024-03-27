@@ -30,9 +30,7 @@ const TopCards = () => {
             </div>
         </div>
         <div className='rounded-sm bg-[#323232] p-5 w-[30%] h-full hover:cursor-pointer hover:bg-gray-700'>
-            <button className='bg-primary-1' onClick={()=>setShowTransactionsModal(!showTransactionsModal)}>
-                {showTransactionsModal?<p>Deposit</p> : <p>Transactions</p>}
-            </button>
+            Deposit
         </div>
     </div>
   )

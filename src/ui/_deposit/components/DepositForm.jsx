@@ -1,4 +1,8 @@
 import React, {useEffect, useState} from "react";
+import { auth } from "../../../lib/firebase";
+import { findUser, createUser } from "../../../lib/services/firestore";
+// import { doc, getDoc } from "firebase/firestore";
+
 import { Buffer } from 'buffer'; if (!window.Buffer) {   window.Buffer = Buffer; };
 import { useCountries } from "use-react-countries";
 import {
@@ -60,9 +64,14 @@ function formatExpires(value) {
     .replace(/^0{1,}/g, "0")
     .replace(/^([0-1]{1}[0-9]{1})([0-9]{1,2}).*/g, "$1/$2");
 }
+
+const isEmptyObject = (obj) => {
+  return Object.keys(obj).length === 0 && obj.constructor === Object;
+};
  
 export default function DepositForm() {
   const { register, formState: { errors }, handleSubmit, reset, setValue } = useForm();
+  const user = auth.currentUser;
 
   const { countries } = useCountries();
   const [type, setType] = useState("card");
@@ -70,16 +79,7 @@ export default function DepositForm() {
   const [cardExpires, setCardExpires] = useState("");
   const [payStatus, setPayStatus] = useState(1);
 
-  const [billingInfo, setBillingInfo] = useState({
-        "country": "US",
-        "firstName": "John",
-        "lastName": "Deo",
-        "address1": "901 Metro Center Blvd",
-        "postalCode": "40500",
-        "locality": "Foster City",
-        "administrativeArea": "CA",
-        "email": "test@cybs.com"
-    });
+  const [billingInfo, setBillingInfo] = useState({});
 
   const [apiResponse, setApiResponse] = useState('');
 
@@ -155,48 +155,73 @@ export default function DepositForm() {
     toast.info(JSON.stringify(formData)); 
     await processPayment(formData);
     toast.success('Payment successful: '+ payStatus);
-    toast.info('Payment info: '+ apiResponse);  
     reset();
     // setModal(!modal);
   };
 
   // Sample code to test modal functionality
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [email, setEmail] = useState('');
-  const [firstname, setFirstname] = useState('');
+  const [hasBillingInfo, setHasBillingInfo] = useState(false);
 
   const handleAddBillingInfo = async (formData) => {
-    toast.info("Submitting Billing Information");
-    await setEmail(formData.email);
-    // Implement your authentication logic here
-    // For demonstration purpose, simply checking if both fields are filled
-    if (email) {
-        toast.info(formData.email);
-      setIsLoggedIn(true);
-    } else {
-      toast.error('no email error', JSON.stringify(formData));
-    }
+   try {
+        setValue("userId", `${user.uid}`)
+        // toast.info("Submitting Billing Information");
+        let newUser = await createUser(formData);
+        refreshPage()
+        toast.success(`New user added ${newUser.id}`);
+        setHasBillingInfo(true);
+
+        // await setEmail(formData.email);
+        // Implement your authentication logic here
+        // For demonstration purpose, simply checking if both fields are filled
+        // if (email) {
+        //     toast.info(formData.email);
+        //   setHasBillingInfo(true);
+        // } else {
+        //   toast.error('no email error', JSON.stringify(formData));
+        // }
+   } catch (error) {
+      // toast.error('no email catch error');
+   }
   };
 
+  function refreshPage() {
+    window.location.reload(false);
+  }
+
   const handleLogout = () => {
-    setIsLoggedIn(false);
+    setHasBillingInfo(false);
   };
 
   // End of Sample Code
 
   // Fetch Billing Information
-  useEffect(() => {
-    toast.info("Fetching Billing Information");
+  useEffect( () => {
+    findUser(user.uid)
+    .then((user) => {
+        if(isEmptyObject(user)){
+            toast.error("No user billing info");
+        }else{
+            setBillingInfo(user);
+            setHasBillingInfo(true);
+        }
+    })
+    .catch((err) => {})
+    toast.info(`Logged in user: ${ user.uid}`);
   },[]);
  
   return (
     <div className="flex justify-center w-full align-center h-[90vh] border-black p-0 overflow-scroll">
-    {!isLoggedIn && (
+    {!hasBillingInfo && (
       <div className='fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50'>
         
         <form onSubmit={handleSubmit(handleAddBillingInfo)} className="max-w-md mx-auto p-4 border border-gray-800 rounded">
             <div className="text-white p-2 w-full text-center font-bold rounded-md bg-gray-600">Enter Your Billing Information</div>
             <div className="flex p-3 bg-black>" />
+
+            
+            <input id="userId" type="hidden" value={user.id}  {...register('userId')}   disabled={true} />
+
             <div className="mb-4">
                 <label htmlFor="country" className="block text-sm font-medium text-gray-700">Country</label>
                 <input id="country" type="text" 
@@ -284,7 +309,7 @@ export default function DepositForm() {
         </form>
       </div>
     )}
-    {isLoggedIn && (
+    {hasBillingInfo && (
       <div className="flex justify-center w-full align-center h-[90vh] border-black p-0 overflow-scroll gap-2">
         <div className="flex w-full justify-center">
             <Card className="w-full max-w-[24rem] bg-gray-800 rounded-sm">

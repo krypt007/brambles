@@ -1,6 +1,5 @@
 import React, {useContext, useState} from 'react'
 import { Link } from 'react-router-dom'
-import { useStytchSession, useStytchUser } from '@stytch/react'
 import { auth } from "../../lib/firebase";
 
 import MyContext from "../../context/MyContext";
