@@ -128,7 +128,7 @@ export default function DepositForm() {
         body: data
     };    
 
-    await fetch('https://brambles-express-gzwsdj55u-marastreams.vercel.app/api/cybersource', options)
+    await fetch('https://brambles-express-y9nfduoid-marastreams.vercel.app/api/cybersource', options)
     .then(response => response.json())
     .then(data => {
         console.log(JSON.stringify(data));
@@ -182,6 +182,7 @@ export default function DepositForm() {
         // }
    } catch (error) {
       // toast.error('no email catch error');
+      Navigate("/")
    }
   };
 
@@ -207,7 +208,7 @@ export default function DepositForm() {
         }
     })
     .catch((err) => {})
-    toast.info(`Logged in user: ${ user.uid}`);
+    toast.info(`Logged in user: ${ user.email}`);
   },[]);
  
   return (

@@ -1,4 +1,4 @@
-import Sidebar from "../../ui/Sidebar"
+import Sidebar from "../../ui/_deposit/components/Sidebar"
 import DepositForm from "../../ui/_deposit/components/DepositForm"
 const Deposit = () => {
   return (
