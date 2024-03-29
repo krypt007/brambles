@@ -2,7 +2,7 @@ import React from 'react'
 import Transactions from './Transactions'
 import MyContext from "../context/MyContext";
 import { useContext } from 'react';
-import DepositForm from './ui/DepositForm';
+import DepositForm from '../ui/_dashboard/DepositForm';
 
 
 const Layout = () => {
