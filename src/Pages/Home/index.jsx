@@ -17,10 +17,10 @@ const Home = () => {
             <div className='p-2'><div className='p-2 rounded-full w-[24px] h-[24px] bg-gradient-to-br from-red-500 to-pink-200 animate-pulse' /></div>
             <div className='flex gap-2 text-sm font-bold'>
               <div className='hover:cursor-pointer hover:text-red-300'>
-                <Link to={user.id ? "/deposit" : "/login"} className='text-white hover:text-red-300'> <div className='p-2 rounded-md hover:bg-gray-400'>Donate</div></Link>
+                <Link to={user?.id ? "/deposit" : "/login"} className='text-white hover:text-red-300'> <div className='p-2 rounded-md hover:bg-gray-400'>Donate</div></Link>
               </div>
               <div className='hover:cursor-pointer hover:text-purple-500'>
-                <Link to={user ? "/Dashboard" : "/login"} className='text-white font-bold hover:text-purple-500'><div className='p-2 rounded-md hover:bg-gray-400'>Dashboard</div></Link>
+                <Link to={user?.id ? "/Dashboard" : "/login"} className='text-white font-bold hover:text-purple-500'><div className='p-2 rounded-md hover:bg-gray-400'>Dashboard</div></Link>
               </div>
             </div>
           </div>
